@@ -15,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.http.HttpHeaders;
 import com.ibuy.user.demo.dto.ErrorResponse;
+import com.ibuy.user.demo.exception.InvalidUserCredentials;
 
 @ControllerAdvice
 public class UserException extends ResponseEntityExceptionHandler {

@@ -1,7 +1,6 @@
 package com.ibuy.user.demo.util;
 
-import static com.ibuy.user.demo.constants.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
-import static com.ibuy.user.demo.constants.Constants.SIGNING_KEY;
+import static com.ibuy.user.demo.constants.Constants.*;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -17,6 +16,7 @@ import com.ibuy.user.demo.entity.Customer;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
 @Component
 public class JwtTokenUtil implements Serializable{
 	
