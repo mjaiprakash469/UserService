@@ -24,4 +24,9 @@ public class CustomerController {
 		return customerService.purchase(token, request);
 	}
 	
+	@GetMapping("/history{pageSize}")
+	public List<Purchase> getPurchaseHistory(@PathVariable int pageSize){
+		return purchaseService.getPurchaseHistory(pageSize);
+	}
+	
 }
