@@ -11,6 +11,6 @@ import com.ibuy.user.demo.dto.ProductResponse;
 @FeignClient(value="product-service", url="http://localhost:8082")
 public interface ProductClient {
 
-	@GetMapping("/products/{productId}")
-	public Optional<ProductResponse> productDetails(@PathVariable int productId);
+	@GetMapping("/products/{id}")
+	public Optional<ProductResponse> getProduct(@PathVariable int id);
 }
