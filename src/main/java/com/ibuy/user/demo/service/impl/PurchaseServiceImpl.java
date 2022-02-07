@@ -56,7 +56,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		List<HistoryRepsonse> historyDetails=new ArrayList<HistoryRepsonse>();
 		DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		getPurchaseList.stream().forEach((p)->historyDetails.add(new HistoryRepsonse(p.getPurchaseId(), 
-				productClient.productDetails(p.getProductId()).get().getProductName(), 
+				productClient.getProduct(p.getProductId()).get().getProductName(), 
 				p.getAmount(), p.getPurchasedDate().format(formatter))));
 			return historyDetails;
 	}
