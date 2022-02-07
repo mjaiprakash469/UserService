@@ -115,7 +115,7 @@ public class CustomerServiceImpl implements CustomerService,UserDetailsService{
 	public ResponseEntity<CartResponse> addProduct(String token, CartRequest request) {
 		String username=jwtUtil.getUsernameFromToken(token);
 		Optional<Customer> customer=usersRepository.findByEmail(username);
-		Optional<ProductResponse> response=productClient.productDetails(request.getProductId());
+		Optional<ProductResponse> response=productClient.getProduct(request.getProductId());
 		if(request.getQuantity()==0) {
 			return new ResponseEntity<CartResponse>(new CartResponse("Add atleast one product quantity",0)
 					,HttpStatus.BAD_REQUEST);
