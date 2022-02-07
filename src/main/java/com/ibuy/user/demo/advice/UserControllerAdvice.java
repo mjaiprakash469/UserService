@@ -8,9 +8,9 @@ import com.ibuy.user.demo.exception.PurchaseItenNotFoundException;
 
 public class UserControllerAdvice {
 
-  @ExceptionHandler(PurchaseItenNotFoundException.class)
-	public ResponseEntity<String> emtyHandler(PurchaseItenNotFoundException purchaseItenNotFoundException){
-		return new ResponseEntity<String>("Invalid Username or Password", HttpStatus.BAD_REQUEST);
-	}
+	 @ExceptionHandler(PurchaseItenNotFoundException.class)
+		public ResponseEntity<String> emtyHandler(PurchaseItenNotFoundException purchaseItenNotFoundException){
+			return new ResponseEntity<String>("Invalid Username or Password", HttpStatus.BAD_REQUEST);
+		}
 
 }
