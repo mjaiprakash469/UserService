@@ -32,7 +32,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public CartResponse updateCart(CartRequest request, int cartId, String email) throws CartNotAvailableException {
-		Optional<ProductResponse> proOptional = Optional.of(productClient.getProduct(request.getProductId()));
+		Optional<ProductResponse> proOptional = productClient.getProduct(request.getProductId());
 		if (proOptional.isPresent()) {
 			double price = proOptional.get().getPrice();
 			Optional<Cart> cartOptional = cartRepository.findById(cartId);

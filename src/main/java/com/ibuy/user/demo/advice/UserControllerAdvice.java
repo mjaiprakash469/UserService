@@ -24,5 +24,9 @@ public class UserControllerAdvice {
 	public ResponseEntity<String> emtyHandlerProduct(ProductNotFountException productNotFountException){
 		return new ResponseEntity<String>(productNotFountException.getMessage(), HttpStatus.NOT_FOUND);
 	}
+	 @ExceptionHandler(PurchaseItenNotFoundException.class)
+		public ResponseEntity<String> emtyHandlerPuechase(PurchaseItenNotFoundException purchaseItenNotFoundException){
+			return new ResponseEntity<String>("Invalid Username or Password", HttpStatus.BAD_REQUEST);
+		}
 
 }

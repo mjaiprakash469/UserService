@@ -16,12 +16,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import com.ibuy.user.demo.dto.CartRequest;
+import com.ibuy.user.demo.dto.CartResponse;
+import com.ibuy.user.demo.dto.ProductResponse;
 import com.ibuy.user.demo.dto.PurchaseRequest;
 import com.ibuy.user.demo.dto.PurchaseResponse;
 import com.ibuy.user.demo.entity.Cart;
 import com.ibuy.user.demo.entity.Customer;
 import com.ibuy.user.demo.entity.Purchase;
 import com.ibuy.user.demo.exception.InvalidUserCredentials;
+import com.ibuy.user.demo.feignclient.ProductClient;
 import com.ibuy.user.demo.repository.CartRepository;
 import com.ibuy.user.demo.repository.CustomerRepository;
 import com.ibuy.user.demo.repository.PurchaseRepository;
@@ -39,6 +43,9 @@ public class CustomerServiceImpl implements CustomerService,UserDetailsService{
 	
 	@Autowired
 	PurchaseRepository purchaseRepo;
+	
+	@Autowired
+	ProductClient productClient;
 	
 	@Autowired
 	JwtTokenUtil jwtUtil;
@@ -103,6 +110,32 @@ public class CustomerServiceImpl implements CustomerService,UserDetailsService{
 			} 
 		}
 	}
+
+	@Override
+	public ResponseEntity<CartResponse> addProduct(String token, CartRequest request) {
+		String username=jwtUtil.getUsernameFromToken(token);
+		Optional<Customer> customer=usersRepository.findByEmail(username);
+		Optional<ProductResponse> response=productClient.getProduct(request.getProductId());
+		if(request.getQuantity()==0) {
+			return new ResponseEntity<CartResponse>(new CartResponse("Add atleast one product quantity", 0, 0)
+					,HttpStatus.BAD_REQUEST);
+		}
+		if(response.isPresent()) {
+			ProductResponse pr=response.get();
+			Customer c=customer.get();
+			double amount=(pr.getPrice()*request.getQuantity());
+			Cart cart=new Cart(c.getCustomerId(),pr.getProductId(),request.getQuantity(),amount);
+			cartRepo.save(cart);
+			return new ResponseEntity<CartResponse>(new CartResponse("product added to the cart",
+					cart.getCartId(), cart.getQuantity()),HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<CartResponse>(new CartResponse("No product found with"+request.getProductId(), 0, 0)
+					,HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
 		
 
 }
